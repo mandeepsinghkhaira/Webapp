@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Fetch using MySQL and Node.js</title>
+</head>
+
+<body>
+    <div class="table-data">
+        <h2>Display Data using Node.js & MySQL</h2>
+        <table border="1">
+            <tr>
+                <th>Customer ID</th>
+                <th>First Name</th>
+                <th>Surename</th>
+                <th>Phone Number</th>
+                <th>Email Address</th>
+            </tr>
+
+            <% if(customerData.length){ 
+                for(var i = 0;i < customerData.length;i++) { %>
+            <tr>
+                <td><%=customerData[i].CUSTOMERID%></td>
+                <td><%=customerData[i].FNAME%></td>
+                <td><%=customerData[i].SNAME%></td>
+                <td><%=customerData[i].PHONE_NUMBER%></td>
+                <td><%=customerData[i].EMAIL%></td>
+            </tr>
+            <% }
+              }else{ %>
+            <tr>
+                <td colspan="7">No Data Found</td>
+            </tr>
+            <% } %>
+        </table>
+    </div>
+</body>
+
+</html>
