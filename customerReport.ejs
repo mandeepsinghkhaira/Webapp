@@ -2,37 +2,50 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
     <title>Fetch using MySQL and Node.js</title>
 </head>
 
 <body>
-    <div class="table-data">
-        <h2>Display Data using Node.js & MySQL</h2>
-        <table border="1">
-            <tr>
-                <th>Customer ID</th>
-                <th>First Name</th>
-                <th>Surename</th>
-                <th>Phone Number</th>
-                <th>Email Address</th>
-            </tr>
+    <div class="card-body">
 
-            <% if(customerData.length){ 
-                for(var i = 0;i < customerData.length;i++) { %>
-            <tr>
-                <td><%=customerData[i].CUSTOMERID%></td>
-                <td><%=customerData[i].FNAME%></td>
-                <td><%=customerData[i].SNAME%></td>
-                <td><%=customerData[i].PHONE_NUMBER%></td>
-                <td><%=customerData[i].EMAIL%></td>
-            </tr>
-            <% }
-              }else{ %>
-            <tr>
-                <td colspan="7">No Data Found</td>
-            </tr>
-            <% } %>
+        <% if(data.length) { %>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Surename</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th width="200px">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i = 0; i< data.length; i++) { %>
+                <tr>
+                    <th scope="row"><%= data[i].id%></th>
+                    <td><%= data[i].FNAME%></td>
+                    <td><%= data[i].SNAME%></td>
+                    <td><%= data[i].PHONE_NUMBER%></td>
+                    <td><%= data[i].EMAIL%></td>
+                    <td>
+                        <a class="btn btn-danger delete" onclick="return alert('Are You sure?')"
+                            href="/delete/<%=data[i].id%>">Delete</a>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
         </table>
+        <% } %>
+
+        <!-- if result is empty -->
+        <% if(!data.length) { %>
+        <p class="text-center">No data found!</p>
+        <% } %>
+
+    </div>
     </div>
 </body>
 
