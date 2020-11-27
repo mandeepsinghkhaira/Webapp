@@ -10,10 +10,11 @@ let con = mysql.createConnection({
     host: 'localhost',
     user: 'mandeep',
     database: 'sharonsDB',
-    password: 'password'
+    password: 'password',
+    multipleStatements: true
 })
 con.connect();
-
+// the mySQL nodejs docs state: Support for multiple statements is disabled for security reasons (it allows for SQL injection attacks if values are not properly escaped). I've had to enable them for the appointment feauture to work.
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,14 +56,14 @@ app.post("/registerStaff", function (req, res) {
 });
 ///////////////////appointment
 app.post("/registerAppointment", function (req, res) {
-    let customer = {
+    let bookings = {
         id: null,
-        FNAME: req.body.OPTION,
-        SNAME: req.body.SNAME,
-        PHONE_NUMBER: req.body.PHONE_NUMBER,
-        EMAIL: req.body.EMAIL
+        STAFFID: req.body.STAFFID,
+        CUSTOMERID: req.body.CUSTOMERID,
+        BOOKING_DATE: req.body.BOOKING_DATE,
+        BOOKING_TIME: req.body.BOOKING_TIME
     }
-    con.query('INSERT INTO CUSTOMER SET ?', customer, function (err, data) {
+    con.query('INSERT INTO BOOKINGS SET ?', bookings, function (err, data) {
         if (err) throw err;
         res.redirect("/appointment")
         console.log(data);
@@ -90,34 +91,42 @@ app.get('/staffReport', function (req, res) {
 });
 ///////////////////////////appointment
 app.get('/appointment', function (req, res) {
-    let q = "SELECT * FROM CUSTOMER";
+    let q = "SELECT * FROM CUSTOMER; SELECT * FROM STAFF; SELECT * FROM BOOKINGS"
     con.query(q, function (err, data) {
         if (err) throw err;
 
-        res.render("appointment", { title: 'customerReport', data: data });
+        res.render("appointment", { title: 'appointment', data: data });
     })
 });
 //*******************delete data************************************
 
 ///////////////////////CUSTOMER
-app.get('/delete/(:id)', function (req, res, next) {
+app.get('/delete/(:id)', function (req, res) {
     let id = req.params.id;
     let z = `DELETE FROM CUSTOMER WHERE id=${id}`;
     con.query(z, function (err, data) {
-        if (err) throw err;
-        console.log(data.affectedRows + " record(s) updated");
+        if (err) console.log(err);
     });
     res.redirect('/customerReport');
 
 });
 /////////////////////////STAFF
-app.get('/erase/(:id)', function (req, res, next) {
+app.get('/erase/(:id)', function (req, res) {
     let id = req.params.id;
     let z = `DELETE FROM STAFF WHERE id=${id}`;
     con.query(z, function (err, data) {
-        if (err) throw err;
-        console.log(data.affectedRows + " record(s) updated");
+        if (err) console.log(err);
     });
     res.redirect('/staffReport');
+
+});
+//////////////////////////BOOKINGS
+app.get('/del/(:id)', function (req, res) {
+    let id = req.params.id;
+    let z = `DELETE FROM BOOKINGS WHERE id=${id}`;
+    con.query(z, function (err, data) {
+        if (err) console.log(err);
+    });
+    res.redirect('/appointment');
 
 });
