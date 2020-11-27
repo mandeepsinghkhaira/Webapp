@@ -30,7 +30,7 @@
     <br>
 
     <blockquote class="blockquote text-center">
-        <h1 class="mb-0">Customer Database</h1>
+        <h1 class="mb-0">Staff Database</h1>
     </blockquote>
 
     <br>
@@ -38,7 +38,7 @@
     <br>
 
     <div>
-        <form method="POST" action='/register'>
+        <form method="POST" action='/registerStaff'>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <input type="First Name" name="FNAME" class="form-control" placeholder="Enter First Name">
@@ -67,7 +67,7 @@
     <br>
 
     <blockquote class="blockquote text-center">
-        <p>Customer Details Report</p>
+        <p>Staff Details Report</p>
     </blockquote>
     <div class="table-responsive-sm">
         <% if(data.length) { %>
@@ -91,8 +91,9 @@
                     <td><%= data[i].PHONE_NUMBER%></td>
                     <td><%= data[i].EMAIL%></td>
                     <td>
-                        <a class="btn btn-dark delete" onclick="return alert('Are you sure you to delete this record?')"
-                            href="/delete/<%=data[i].id%>">Delete</a>
+                        <a class="btn btn-dark delete"
+                            onclick="return alert('Are you sure you want to delete this record?')"
+                            href="/erase/<%=data[i].id%>">Delete</a>
                     </td>
                 </tr>
                 <% } %>

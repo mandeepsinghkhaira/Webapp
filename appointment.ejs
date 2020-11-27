@@ -30,7 +30,7 @@
     <br>
 
     <blockquote class="blockquote text-center">
-        <h1 class="mb-0">Customer Database</h1>
+        <h1 class="mb-0">Appointment Database</h1>
     </blockquote>
 
     <br>
@@ -38,11 +38,17 @@
     <br>
 
     <div>
-        <form method="POST" action='/register'>
+        <form method="POST" action='/registerAppointment'>
+
             <div class="form-row">
-                <div class="form-group col-md-6">
-                    <input type="First Name" name="FNAME" class="form-control" placeholder="Enter First Name">
-                </div>
+                <select name="OPTION" class="form-control col-md-6" id="exampleFormControlSelect1">
+                    <% for (var i = 0; i < data.length; i++) { %>
+                    <option>
+                        <%= data[i].FNAME %>
+                    </option>
+                    <% } %>
+                </select>
+                <br>
                 <div class="form-group col-md-6 ">
                     <input type="Surname Name" name="SNAME" class="form-control" placeholder="Enter Surname Name">
                 </div>
@@ -60,50 +66,6 @@
                 <button type="submit" class="btn btn-dark btn-lg">Submit</button>
             </div>
         </form>
-    </div>
-
-    <br>
-
-    <br>
-
-    <blockquote class="blockquote text-center">
-        <p>Customer Details Report</p>
-    </blockquote>
-    <div class="table-responsive-sm">
-        <% if(data.length) { %>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Surename</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Email</th>
-                    <th width="100px">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for(var i = 0; i< data.length; i++) { %>
-                <tr>
-                    <th scope="row"><%= data[i].id%></th>
-                    <td><%= data[i].FNAME%></td>
-                    <td><%= data[i].SNAME%></td>
-                    <td><%= data[i].PHONE_NUMBER%></td>
-                    <td><%= data[i].EMAIL%></td>
-                    <td>
-                        <a class="btn btn-dark delete" onclick="return alert('Are you sure you to delete this record?')"
-                            href="/delete/<%=data[i].id%>">Delete</a>
-                    </td>
-                </tr>
-                <% } %>
-            </tbody>
-        </table>
-        <% } %>
-
-        <!-- if result is empty -->
-        <% if(!data.length) { %>
-        <p class="text-center">No data found!</p>
-        <% } %>
     </div>
 </body>
 
