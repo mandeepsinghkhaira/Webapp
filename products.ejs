@@ -37,7 +37,7 @@
         <br>
 
         <blockquote class="blockquote text-center">
-            <h1 class="mb-0">Customer Database</h1>
+            <h1 class="mb-0">Products Database</h1>
         </blockquote>
 
         <br>
@@ -45,22 +45,22 @@
         <br>
 
         <div>
-            <form method="POST" action='/register'>
+            <form method="POST" action='/registerProducts'>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <input type="First Name" name="FNAME" class="form-control" placeholder="Enter First Name">
+                        <input type="Product Name" name="PRODUCT_NAME" class="form-control" placeholder="Product Name">
                     </div>
                     <div class="form-group col-md-6 ">
-                        <input type="Surname Name" name="SNAME" class="form-control" placeholder="Enter Surname Name">
+                        <input type="Department Name" name="DEPARTMENT" class="form-control"
+                            placeholder="Enter Department Name">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <input type="Phone Number" name="PHONE_NUMBER" class="form-control"
-                            placeholder="Enter Contact Number">
+                        <input type="Price" name="PRICE" class="form-control" placeholder="Enter Price">
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="Email" name="EMAIL" class="form-control" placeholder="Enter Email">
+                        <input type="Stock" name="STOCK" class="form-control" placeholder="Enter Stock Available">
                     </div>
                 </div>
                 <div class="form-group col text-center">
@@ -74,18 +74,18 @@
         <br>
 
         <blockquote class="blockquote text-center">
-            <p>Customer Details Report</p>
+            <p>Products Detail Report</p>
         </blockquote>
         <div class="table-responsive-sm">
             <% if(data.length) { %>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Customer ID</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Surename</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Email</th>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Stock</th>
                         <th width="100px">Action</th>
                     </tr>
                 </thead>
@@ -93,13 +93,13 @@
                     <% for(var i = 0; i< data.length; i++) { %>
                     <tr>
                         <th scope="row"><%= data[i].id%></th>
-                        <td><%= data[i].FNAME%></td>
-                        <td><%= data[i].SNAME%></td>
-                        <td><%= data[i].PHONE_NUMBER%></td>
-                        <td><%= data[i].EMAIL%></td>
+                        <td><%= data[i].PRODUCT_NAME%></td>
+                        <td><%= data[i].DEPARTMENT%></td>
+                        <td><%= data[i].PRICE%></td>
+                        <td><%= data[i].STOCK%></td>
                         <td>
                             <a class="btn btn-dark delete" onclick="return alert('Deleted!')"
-                                href="/deleteCustomer/<%=data[i].id%>">Delete</a>
+                                href="/deleteProduct/<%=data[i].id%>">Delete</a>
                         </td>
                     </tr>
                     <% } %>

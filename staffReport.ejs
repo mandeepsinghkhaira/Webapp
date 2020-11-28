@@ -17,10 +17,13 @@
                 <a class="nav-link" href="./staffReport">Staff</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./appointment">Bookings</a>
+                <a class="nav-link" href="./appointment">Appointments</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./#">?</a>
+                <a class="nav-link" href="./products">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./orders">Orders</a>
             </li>
         </ul>
     </div>
@@ -96,7 +99,7 @@
                         <td><%= data[i].EMAIL%></td>
                         <td>
                             <a class="btn btn-dark delete" onclick="return alert('Deleted!')"
-                                href="/erase/<%=data[i].id%>">Delete</a>
+                                href="/deleteStaff/<%=data[i].id%>">Delete</a>
                         </td>
                     </tr>
                     <% } %>

@@ -1,10 +1,10 @@
-import express, { Router } from 'express'
+import express from 'express'
 import mysql from "mysql";
 import bodyParser from "body-parser"
 
 const app = express()
 const PORT = 4000;
-var router = express.Router();
+
 
 let con = mysql.createConnection({
     host: 'localhost',
@@ -15,7 +15,6 @@ let con = mysql.createConnection({
 })
 con.connect();
 // the mySQL nodejs docs state: Support for multiple statements is disabled for security reasons (it allows for SQL injection attacks if values are not properly escaped). I've had to enable them for the appointment feauture to work.
-
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 //body-parsers allows me to extract data from post req
@@ -69,6 +68,36 @@ app.post("/registerAppointment", function (req, res) {
         console.log(data);
     });
 });
+///////////////////orders
+app.post("/registerOrder", function (req, res) {
+    let orders = {
+        id: null,
+        PRODUCT_ID: req.body.PRODUCT_ID,
+        CUSTOMER_ID: req.body.CUSTOMER_ID,
+        STAFF_ID: req.body.STAFF_ID,
+        QUANTITY: req.body.QUANTITY
+    }
+    con.query('INSERT INTO ORDERS SET ?', orders, function (err, data) {
+        if (err) console.log(err);
+        res.redirect("/orders")
+        console.log(data);
+    });
+});
+/////////////////////////products
+app.post("/registerProducts", function (req, res) {
+    let products = {
+        id: null,
+        PRODUCT_NAME: req.body.PRODUCT_NAME,
+        DEPARTMENT: req.body.DEPARTMENT,
+        PRICE: req.body.PRICE,
+        STOCK: req.body.STOCK
+    }
+    con.query('INSERT INTO PRODUCTS SET ?', products, function (err, data) {
+        if (err) throw err;
+        res.redirect("/products")
+        console.log(data);
+    });
+});
 
 //*****************routes********************
 /////////////////CUSTOMER
@@ -98,10 +127,28 @@ app.get('/appointment', function (req, res) {
         res.render("appointment", { title: 'appointment', data: data });
     })
 });
-//*******************delete data************************************
+///////////////////////////orders
+app.get('/orders', function (req, res) {
+    let q = "SELECT id FROM PRODUCTS; SELECT id FROM CUSTOMER; SELECT id FROM STAFF; SELECT * FROM ORDERS"
+    con.query(q, function (err, data) {
+        if (err) throw err;
 
+        res.render("orders", { title: 'orders', data: data });
+    })
+});
+////////////////////////////////products
+app.get('/products', function (req, res) {
+    let q = "SELECT * FROM PRODUCTS;"
+    con.query(q, function (err, data) {
+        if (err) throw err;
+
+        res.render("products", { title: 'products', data: data });
+    })
+});
+
+//*******************delete data************************************
 ///////////////////////CUSTOMER
-app.get('/delete/(:id)', function (req, res) {
+app.get('/deleteCustomer/(:id)', function (req, res) {
     let id = req.params.id;
     let z = `DELETE FROM CUSTOMER WHERE id=${id}`;
     con.query(z, function (err, data) {
@@ -111,22 +158,40 @@ app.get('/delete/(:id)', function (req, res) {
 
 });
 /////////////////////////STAFF
-app.get('/erase/(:id)', function (req, res) {
+app.get('/deleteStaff/(:id)', function (req, res) {
     let id = req.params.id;
     let z = `DELETE FROM STAFF WHERE id=${id}`;
     con.query(z, function (err, data) {
         if (err) console.log(err);
     });
     res.redirect('/staffReport');
-
 });
-//////////////////////////BOOKINGS
-app.get('/del/(:id)', function (req, res) {
+//////////////////////////appointment
+app.get('/deleteAppointment/(:id)', function (req, res) {
     let id = req.params.id;
     let z = `DELETE FROM BOOKINGS WHERE id=${id}`;
     con.query(z, function (err, data) {
         if (err) console.log(err);
     });
     res.redirect('/appointment');
+});
+///////////////////////////products
+app.get('/deleteProduct/(:id)', function (req, res) {
+    let id = req.params.id;
+    let z = `DELETE FROM PRODUCTS WHERE id=${id}`;
+    con.query(z, function (err, data) {
+        if (err) console.log(err);
+    });
+    res.redirect('/products');
+
+});
+///////////////////////////orders
+app.get('/deleteorder/(:id)', function (req, res) {
+    let id = req.params.id;
+    let z = `DELETE FROM ORDERS WHERE id=${id}`;
+    con.query(z, function (err, data) {
+        if (err) console.log(err);
+    });
+    res.redirect('/orders');
 
 });

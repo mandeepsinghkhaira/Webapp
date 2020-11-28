@@ -37,7 +37,7 @@
         <br>
 
         <blockquote class="blockquote text-center">
-            <h1 class="mb-0">Appointment Database</h1>
+            <h1 class="mb-0">Orders</h1>
         </blockquote>
 
         <br>
@@ -45,11 +45,23 @@
         <br>
 
 
-        <form method="POST" action="/registerAppointment">
+        <form method="POST" action="/registerOrder">
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Enter Staff ID:</label>
+                <label class="col-sm-2 col-form-label">Enter Product ID:</label>
                 <div class="col-sm-10">
-                    <select name="STAFFID" class="form-control col-md-6">
+                    <select name="PRODUCT_ID" class="form-control col-md-6">
+                        <% for (var i = 0; i < data[0].length; i++) { %>
+                        <option>
+                            <%= data[0][i].id %>
+                        </option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Enter Customer ID:</label>
+                <div class="col-sm-10">
+                    <select name="CUSTOMER_ID" class="form-control col-md-6">
                         <% for (var i = 0; i < data[1].length; i++) { %>
                         <option>
                             <%= data[1][i].id %>
@@ -59,33 +71,25 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Enter Customer ID:</label>
+                <label class="col-sm-2 col-form-label">Enter Staff ID:</label>
                 <div class="col-sm-10">
-                    <select name="CUSTOMERID" class="form-control col-md-6">
-                        <% for (var i = 0; i < data[0].length; i++) { %>
+                    <select name="STAFF_ID" class="form-control col-md-6">
+                        <% for (var i = 0; i < data[2].length; i++) { %>
                         <option>
-                            <%= data[0][i].id %>
+                            <%= data[2][i].id %>
                         </option>
                         <% } %>
                     </select>
                 </div>
             </div>
-            <fieldset class="form-group">
-                <div class="row">
-                    <legend class="col-form-label col-sm-2 pt-0">Date of Booking:</legend>
-                    <div class="col-sm-10">
-                        <input type="date" name="BOOKING_DATE">
-                    </div>
-                </div>
-            </fieldset>
             <div class="form-group row">
-                <div class="col-sm-2">Time of Booking:</div>
-                <div class="col-sm-10">
-                    <input type="time" name="BOOKING_TIME">
+                <label class="col-sm-2 col-form-label">Enter Quantity</label>
+                <div class="col-sm-4">
+                    <input type="Quantity" name="QUANTITY" class="form-control" placeholder="Quantity">
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
+            <div class="form row">
+                <div class="col-md-6">
                     <button type="submit" class="btn btn-dark">Submit</button>
                 </div>
             </div>
@@ -95,29 +99,29 @@
             <p>Appointments Booked</p>
         </blockquote>
         <div class="table-responsive-sm">
-            <% if(data[2].length) { %>
+            <% if(data[3].length) { %>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Appointment ID</th>
-                        <th scope="col">Staff ID</th>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Product ID</th>
                         <th scope="col">Customer ID</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Time</th>
+                        <th scope="col">Staff ID</th>
+                        <th scope="col">Quantity</th>
                         <th width="100px">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(var i = 0; i< data[2].length; i++) { %>
+                    <% for(var i = 0; i< data[3].length; i++) { %>
                     <tr>
-                        <th scope="row"><%= data[2][i].id%></th>
-                        <td><%= data[2][i].STAFFID%></td>
-                        <td><%= data[2][i].CUSTOMERID%></td>
-                        <td><%= data[2][i].BOOKING_DATE%></td>
-                        <td><%= data[2][i].BOOKING_TIME%></td>
+                        <th scope="row"><%= data[3][i].id%></th>
+                        <td><%= data[3][i].PRODUCT_ID%></td>
+                        <td><%= data[3][i].CUSTOMER_ID%></td>
+                        <td><%= data[3][i].STAFF_ID%></td>
+                        <td><%= data[3][i].QUANTITY%></td>
                         <td>
                             <a class="btn btn-dark delete" onclick="return alert('Deleted!')"
-                                href="/deleteAppointment/<%=data[2][i].id%>">Delete</a>
+                                href="/deleteorder/<%=data[3][i].id%>">Delete</a>
                         </td>
                     </tr>
                     <% } %>
@@ -126,7 +130,7 @@
             <% } %>
 
             <!-- if result is empty -->
-            <% if(!data[2].length) { %>
+            <% if(!data[3].length) { %>
             <p class="text-center">No data found!</p>
             <% } %>
         </div>
