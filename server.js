@@ -1,9 +1,12 @@
 import express from 'express'
 import mysql from "mysql";
 import bodyParser from "body-parser"
+import path from "path";
+
 
 const app = express()
 const PORT = 4000;
+const __dirname = path.resolve(path.dirname(''));
 
 
 let con = mysql.createConnection({
@@ -99,7 +102,30 @@ app.post("/registerProducts", function (req, res) {
     });
 });
 
+///////////////////////////////////LOGINN
+app.post('/', function (req, res) {
+    var username = req.body.username;
+    var password = req.body.password;
+    let q = 'SELECT * FROM USERS WHERE username = ? AND password = ?'
+    if (username && password) {
+        // check if user exists
+        con.query(q, [username, password], function (error, data, fields) {
+            if (data.length > 0) {
+                res.redirect('customerReport');
+            }
+            res.end();
+        });
+    } else {
+        res.redirect('/');
+        res.end();
+    }
+});
+
 //*****************routes********************
+//////////////////////////LOGIN
+app.get('/', function (request, response) {
+    response.sendFile(path.join(__dirname + '/login.html'));
+});
 /////////////////CUSTOMER
 app.get('/customerReport', function (req, res) {
     let q = "SELECT * FROM CUSTOMER";
@@ -194,4 +220,8 @@ app.get('/deleteorder/(:id)', function (req, res) {
     });
     res.redirect('/orders');
 
+});
+///////////////////////////////
+app.get('/logout', function (req, res) {
+    res.redirect('/');
 });
