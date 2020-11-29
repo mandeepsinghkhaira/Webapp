@@ -104,14 +104,17 @@ app.post("/registerProducts", function (req, res) {
 
 ///////////////////////////////////LOGINN
 app.post('/', function (req, res) {
-    var username = req.body.username;
-    var password = req.body.password;
+    let username = req.body.username;
+    let password = req.body.password;
     let q = 'SELECT * FROM USERS WHERE username = ? AND password = ?'
     if (username && password) {
         // check if user exists
-        con.query(q, [username, password], function (error, data, fields) {
+        con.query(q, [username, password], function (error, data) {
             if (data.length > 0) {
                 res.redirect('customerReport');
+            }
+            else {
+                res.redirect('/')
             }
             res.end();
         });
