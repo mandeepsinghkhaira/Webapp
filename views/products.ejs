@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <title>Sharons Couture Database</title>
+</head>
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: black;">
+    <div class="container">
+        <a class="navbar-brand" href="#">Sharons Couture</a>
+        <div>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="./customerReport">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./staffReport">Staff</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./appointment">Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./orders">Orders</a>
+                </li>
+            </ul>
+        </div>
+        <a class="btn btn-dark mr-sm-2" onclick="return alert('Logged Out!')" href="/logout">Log Out</a>
+    </div>
+</nav>
+
+<body>
+    <div class="container">
+
+        <br>
+
+        <br>
+
+        <blockquote class="blockquote text-center">
+            <h1 class="mb-0">Products Database</h1>
+        </blockquote>
+
+        <br>
+
+        <br>
+
+        <div>
+            <form method="POST" action='/registerProducts'>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="Product Name" name="PRODUCT_NAME" class="form-control" placeholder="Product Name">
+                    </div>
+                    <div class="form-group col-md-6 ">
+                        <input type="Department Name" name="DEPARTMENT" class="form-control"
+                            placeholder="Enter Department Name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="Price" name="PRICE" class="form-control" placeholder="Enter Price">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="Stock" name="STOCK" class="form-control" placeholder="Enter Stock Available">
+                    </div>
+                </div>
+                <div class="form-group col text-center">
+                    <button type="submit" class="btn btn-dark btn-lg">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <br>
+
+        <br>
+
+        <blockquote class="blockquote text-center">
+            <p>Products Detail Report</p>
+        </blockquote>
+        <div class="table-responsive-sm">
+            <% if(data.length) { %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Stock</th>
+                        <th width="100px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i = 0; i< data.length; i++) { %>
+                    <tr>
+                        <th scope="row"><%= data[i].id%></th>
+                        <td><%= data[i].PRODUCT_NAME%></td>
+                        <td><%= data[i].DEPARTMENT%></td>
+                        <td><%= data[i].PRICE%></td>
+                        <td><%= data[i].STOCK%></td>
+                        <td>
+                            <a class="btn btn-dark delete" onclick="return alert('Deleted!')"
+                                href="/deleteProduct/<%=data[i].id%>">Delete</a>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <% } %>
+
+            <!-- if result is empty -->
+            <% if(!data.length) { %>
+            <p class="text-center">No data found!</p>
+            <% } %>
+        </div>
+    </div>
+
+</body>
+
+</html>

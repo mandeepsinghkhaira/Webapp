@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <title>Sharons Couture Database</title>
+</head>
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: black;">
+    <div class="container">
+        <a class="navbar-brand" href="#">Sharons Couture</a>
+        <div>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="./customerReport">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./staffReport">Staff</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./appointment">Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./orders">Orders</a>
+                </li>
+            </ul>
+        </div>
+        <a class="btn btn-dark mr-sm-2" onclick="return alert('Logged Out!')" href="/logout">Log Out</a>
+    </div>
+</nav>
+
+<body>
+    <div class="container">
+
+        <br>
+
+        <br>
+
+        <blockquote class="blockquote text-center">
+            <h1 class="mb-0">Orders</h1>
+        </blockquote>
+
+        <br>
+
+        <br>
+
+
+        <form method="POST" action="/registerOrder">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Enter Product ID:</label>
+                <div class="col-sm-10">
+                    <select name="PRODUCT_ID" class="form-control col-md-6">
+                        <% for (var i = 0; i < data[0].length; i++) { %>
+                        <option>
+                            <%= data[0][i].id %>
+                        </option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Enter Customer ID:</label>
+                <div class="col-sm-10">
+                    <select name="CUSTOMER_ID" class="form-control col-md-6">
+                        <% for (var i = 0; i < data[1].length; i++) { %>
+                        <option>
+                            <%= data[1][i].id %>
+                        </option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Enter Staff ID:</label>
+                <div class="col-sm-10">
+                    <select name="STAFF_ID" class="form-control col-md-6">
+                        <% for (var i = 0; i < data[2].length; i++) { %>
+                        <option>
+                            <%= data[2][i].id %>
+                        </option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Enter Quantity</label>
+                <div class="col-sm-4">
+                    <input type="Quantity" name="QUANTITY" class="form-control" placeholder="Quantity">
+                </div>
+            </div>
+            <div class="form row">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-dark">Submit</button>
+                </div>
+            </div>
+        </form>
+
+        <blockquote class="blockquote text-center">
+            <p>Appointments Booked</p>
+        </blockquote>
+        <div class="table-responsive-sm">
+            <% if(data[3].length) { %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Customer ID</th>
+                        <th scope="col">Staff ID</th>
+                        <th scope="col">Quantity</th>
+                        <th width="100px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i = 0; i< data[3].length; i++) { %>
+                    <tr>
+                        <th scope="row"><%= data[3][i].id%></th>
+                        <td><%= data[3][i].PRODUCT_ID%></td>
+                        <td><%= data[3][i].CUSTOMER_ID%></td>
+                        <td><%= data[3][i].STAFF_ID%></td>
+                        <td><%= data[3][i].QUANTITY%></td>
+                        <td>
+                            <a class="btn btn-dark delete" onclick="return alert('Deleted!')"
+                                href="/deleteorder/<%=data[3][i].id%>">Delete</a>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <% } %>
+
+            <!-- if result is empty -->
+            <% if(!data[3].length) { %>
+            <p class="text-center">No data found!</p>
+            <% } %>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
