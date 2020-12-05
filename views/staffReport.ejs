@@ -48,7 +48,7 @@
         <br>
 
         <div>
-            <form method="POST" action='/registerStaff'>
+            <form method="POST" action='staffReport/registerStaff'>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <input type="First Name" name="FNAME" class="form-control" placeholder="Enter First Name">
@@ -102,7 +102,7 @@
                         <td><%= data[i].EMAIL%></td>
                         <td>
                             <a class="btn btn-dark delete" onclick="return alert('Deleted!')"
-                                href="/deleteStaff/<%=data[i].id%>">Delete</a>
+                                href="staffReport/deleteStaff/<%=data[i].id%>">Delete</a>
                         </td>
                     </tr>
                     <% } %>

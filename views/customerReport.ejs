@@ -3,7 +3,6 @@
 
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
     <title>Sharons Couture Database</title>
 </head>
 <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: black;">
@@ -48,7 +47,7 @@
         <br>
 
         <div>
-            <form method="POST" action='/register'>
+            <form method="POST" action='customerReport/register'>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <input type="First Name" name="FNAME" class="form-control" placeholder="Enter First Name">
@@ -102,7 +101,7 @@
                         <td><%= data[i].EMAIL%></td>
                         <td>
                             <a class="btn btn-dark delete" onclick="return alert('Deleted!')"
-                                href="/deleteCustomer/<%=data[i].id%>">Delete</a>
+                                href="customerReport/deleteCustomer/<%=data[i].id%>">Delete</a>
                         </td>
                     </tr>
                     <% } %>

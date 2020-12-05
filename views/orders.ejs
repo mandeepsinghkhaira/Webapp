@@ -48,7 +48,7 @@
         <br>
 
 
-        <form method="POST" action="/registerOrder">
+        <form method="POST" action="orders/registerOrder">
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Enter Product ID:</label>
                 <div class="col-sm-10">
@@ -124,7 +124,7 @@
                         <td><%= data[3][i].QUANTITY%></td>
                         <td>
                             <a class="btn btn-dark delete" onclick="return alert('Deleted!')"
-                                href="/deleteorder/<%=data[3][i].id%>">Delete</a>
+                                href="orders/deleteorder/<%=data[3][i].id%>">Delete</a>
                         </td>
                     </tr>
                     <% } %>
